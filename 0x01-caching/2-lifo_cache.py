@@ -1,14 +1,13 @@
-#!/usr/bin/python3
-""" FIFOCache module
+#!/usr/bin/env python3
+"""LIFO caching module.
 """
-
 from collections import OrderedDict
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """Represents an object that allows storing and
-    retrieving items from a dictionary with a FIFO
+    retrieving items from a dictionary with a LIFO
     algorithm
     """
 
@@ -23,10 +22,12 @@ class FIFOCache(BaseCaching):
         """
         if key is None or item is None:
             return
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+                last_key, _ = self.cache_data.popitem(True)
+                print("DISCARD:", last_key)
         self.cache_data[key] = item
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            first_key, value = self.cache_data.popitem(False)
-            print("DISCARD:", first_key)
+        self.cache_data.move_to_end(key, last=True)
 
     def get(self, key):
         """Retrieves an item by key
