@@ -1,3 +1,4 @@
+#!/usr/bin/yarn dev
 // script to create and connect to the Redis server 
 
 import { createClient } from 'redis';

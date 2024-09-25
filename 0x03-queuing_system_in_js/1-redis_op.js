@@ -1,3 +1,4 @@
+#!/usr/bin/yarn dev
 // redis-node script 
 
 import { createClient, print } from 'redis';
